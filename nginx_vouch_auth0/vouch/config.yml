@@ -1,0 +1,41 @@
+vouch:
+  logLevel: debug
+  testing: false
+  listen: 0.0.0.0
+  port: 9090
+  allowAllUsers: true
+
+  jwt:
+    # secret: Your-64-character-secret-key-here
+    issuer: Vouch
+    compress: false
+
+  cookie:
+    name: my-vouch-ct
+    secure: false
+    domain: localhost
+
+  headers:
+    jwt: X-Vouch-Token
+    querystring: access_token
+    redirect: X-Vouch-Requested-URI
+    accesstoken: X-Vouch-IdP-AccessToken
+    idtoken: X-Vouch-IdP-IdToken
+
+  post_logout_redirect_uris:
+    - https://{change_with_auth0_domain}/v2/logout?client_id={change_with_auth0_client_id}&returnTo=http://localhost/
+
+oauth:
+  # Generic OpenID Connect
+  # including okta
+  provider: oidc
+  client_id: {change_with_auth0_client_id}
+  client_secret: {change_with_auth0_client_secret}
+  auth_url: https://{change_with_auth0_domain}/authorize
+  token_url: https://{change_with_auth0_domain}/oauth/token
+  user_info_url: https://{change_with_auth0_domain}/userinfo
+  scopes:
+    - openid
+    - email
+    - profile
+  callback_url: http://localhost/auth
